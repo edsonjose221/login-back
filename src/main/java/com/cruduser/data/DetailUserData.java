@@ -1,4 +1,4 @@
-package data;
+package com.cruduser.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import model.User;
+import com.cruduser.model.User;
 
 public class DetailUserData implements UserDetails {
 

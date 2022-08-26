@@ -1,4 +1,4 @@
-package security;
+package com.cruduser.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.cruduser.data.DetailUserData;
+import com.cruduser.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import data.DetailUserData;
-import model.User;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter  {
 	
@@ -34,7 +34,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	}
 	
 	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
+	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		try {
 			User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -43,7 +43,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 					new ArrayList<>()
 					));
 		} catch (IOException e) {
-			throw new RuntimeException("Falha ao autenticar Usuario");
+			throw new RuntimeException("Falha ao autenticar usuário");
 		}
 	}
 	

@@ -1,4 +1,4 @@
-package util;
+package com.cruduser.util;
 
 public enum UserRoles {
 	

@@ -1,4 +1,4 @@
-package controller;
+package com.cruduser.controller;
 
 import java.util.Optional;
 
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import model.User;
-import service.UserService;
-import util.UserRoles;
+import com.cruduser.model.User;
+import com.cruduser.service.UserService;
+import com.cruduser.util.UserRoles;
 
+@RequestMapping("/api/user")
 @RestController
-@RequestMapping("/users")
 public class UserController {
 	
 	@Autowired
@@ -45,12 +45,12 @@ public class UserController {
 		return new ResponseEntity<UserRoles[]>(roles, HttpStatus.OK);
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/logado")
 	public ResponseEntity<Optional<User>> userLogin(@RequestBody User user) {
 		Optional<User> use = userService.login(user);
 		return new ResponseEntity<Optional<User>>(use, HttpStatus.OK);
 	}
-	
+		
 	@PostMapping("/save")
 	public ResponseEntity<User> saveUser(@RequestBody User user) throws Exception {
 		user.setSenha(passwordEncoder.encode(user.getSenha()));

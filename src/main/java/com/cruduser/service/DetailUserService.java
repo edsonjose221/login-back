@@ -1,18 +1,24 @@
-package service;
+package com.cruduser.service;
 
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
-import data.DetailUserData;
-import model.User;
-import repository.UserRepository;
+import com.cruduser.data.DetailUserData;
+import com.cruduser.model.User;
+import com.cruduser.repository.UserRepository;
 
+@Component
 public class DetailUserService implements UserDetailsService {
 	
-	private final UserRepository userRepository = null;
+	private final UserRepository userRepository;
+	
+	public DetailUserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

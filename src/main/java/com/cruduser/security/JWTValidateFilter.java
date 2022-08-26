@@ -1,4 +1,4 @@
-package security;
+package com.cruduser.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +25,8 @@ public class JWTValidateFilter extends BasicAuthenticationFilter  {
 		super(authenticationManager);
 	}
 	
-	protected void filterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		String atributo = request.getHeader(HEADER_ATRIBUTO);
 		
@@ -33,7 +34,7 @@ public class JWTValidateFilter extends BasicAuthenticationFilter  {
 			chain.doFilter(request, response);
 			return;
 		}
-		
+	
 		String token = atributo.replace(ATRIBUTO_PREFIXO, "");
 		UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
 		

@@ -1,4 +1,4 @@
-package model;
+package com.cruduser.model;
 
 import java.io.Serializable;
 
@@ -7,9 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.cruduser.util.UserRoles;
+
 import lombok.Getter;
 import lombok.Setter;
-import util.UserRoles;
 
 @Getter
 @Setter

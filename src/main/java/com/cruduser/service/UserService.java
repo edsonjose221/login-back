@@ -1,14 +1,16 @@
-package service;
+package com.cruduser.service;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import exception.NotFoundException;
-import model.User;
-import repository.UserRepository;
-import util.UserRoles;
+import com.cruduser.exception.NotFoundException;
+import com.cruduser.model.User;
+import com.cruduser.repository.UserRepository;
+import com.cruduser.util.UserRoles;
 
+@Service
 public class UserService {
 	
 	@Autowired
@@ -55,13 +57,12 @@ public class UserService {
 		}
 	}
 	
-	public Optional<User> editUser(User user) {
-		return userRepository.findByEmail(user.getEmail()).map(data -> {
-			data.setNome(user.getNome());
-			data.setEmail(user.getEmail());
-			data.setSenha(user.getSenha());
+	public Optional<User> editUser(User email) throws Exception {
+		return userRepository.findByEmail(email.getEmail()).map(data -> {
+			data.setNome(email.getNome());
+			data.setSenha(email.getSenha());
 			
-			if(user.getUserRoles() == null) {
+			if(email.getUserRoles() == null) {
 				data.setUserRoles(UserRoles.USER);
 			}
 			
