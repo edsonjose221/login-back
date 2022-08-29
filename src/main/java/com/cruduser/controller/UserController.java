@@ -19,8 +19,8 @@ import com.cruduser.model.User;
 import com.cruduser.service.UserService;
 import com.cruduser.util.UserRoles;
 
-@RequestMapping("/api/user")
 @RestController
+@RequestMapping("/api/usuario")
 public class UserController {
 	
 	@Autowired
@@ -33,40 +33,40 @@ public class UserController {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
-	@GetMapping("/admin/list/{id}")
-	public ResponseEntity<Optional<Object>> listUsers(@PathVariable(value = "id") Integer id) throws Exception {
-		Optional<Object> usu = userService.listUser(id);
+	@GetMapping("/admin/listar/{id}")
+	public ResponseEntity<Optional<Object>> listarUsuario(@PathVariable(value = "id") Integer id) {
+		Optional<Object> usu = userService.listarUsuarios(id);
 		return new ResponseEntity<Optional<Object>>(usu, HttpStatus.OK);
 	}
 	
 	@GetMapping("/roles")
-	public ResponseEntity<UserRoles[]> userRoles() {
+	public ResponseEntity<UserRoles[]> roles() {
 		UserRoles[] roles = userService.roles();
 		return new ResponseEntity<UserRoles[]>(roles, HttpStatus.OK);
 	}
 	
 	@PostMapping("/logado")
-	public ResponseEntity<Optional<User>> userLogin(@RequestBody User user) {
-		Optional<User> use = userService.login(user);
+	public ResponseEntity<Optional<User>> usuarioLogado(@RequestBody User user) {
+		Optional<User> use = userService.logado(user);
 		return new ResponseEntity<Optional<User>>(use, HttpStatus.OK);
 	}
 		
-	@PostMapping("/save")
-	public ResponseEntity<User> saveUser(@RequestBody User user) throws Exception {
+	@PostMapping("/salvar")
+	public ResponseEntity<User> salvarUsuario(@RequestBody User user) throws Exception {
 		user.setSenha(passwordEncoder.encode(user.getSenha()));
-		User use = userService.saveUser(user);
+		User use = userService.salvarUsuario(user);
 		return new ResponseEntity<User>(use, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/edit")
-	public ResponseEntity<Optional<User>> editUser(@RequestBody User user) throws Exception {
+	@PutMapping("/editar")
+	public ResponseEntity<Optional<User>> editar(@RequestBody User user) throws Exception {
 		user.setSenha(passwordEncoder.encode(user.getSenha()));
-		Optional<User> use = userService.editUser(user);
+		Optional<User> use = userService.editarUsuario(user);
 		return new ResponseEntity<Optional<User>>(use, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value = "/delete/{id}")
-	public void deleteUser(@PathVariable Integer id) throws Exception {
-		userService.deleteUser(id);
+	@DeleteMapping(value = "/excluir/{id}")
+	public void deletarUsuario(@PathVariable Integer id) throws Exception {
+		userService.delete(id);
 	}
 }

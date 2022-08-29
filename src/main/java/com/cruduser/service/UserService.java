@@ -22,14 +22,14 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 	
-	public Optional<User> login(User userLogin) {
+	public Optional<User> logado(User userLogin) {
 		return userRepository.findByEmail(userLogin.getEmail()).map(data -> {
 			this.userLogin = data;
 			return this.userLogin;
 		});
 	}
 	
-	public Optional<Object> listUser(Integer id) throws NotFoundException {
+	public Optional<Object> listarUsuarios(Integer id) throws NotFoundException {
 		try {
 			 return userRepository.findById(id).map(dados -> {
 				 if(dados.getUserRoles() == UserRoles.ADMIN) {
@@ -44,7 +44,7 @@ public class UserService {
 		 }
 	}
 	
-	public User saveUser(User user) throws Exception {
+	public User salvarUsuario(User user) throws Exception {
 		try {
 			if(user.getUserRoles() == null) {
 				user.setUserRoles(UserRoles.USER);
@@ -57,13 +57,17 @@ public class UserService {
 		}
 	}
 	
-	public Optional<User> editUser(User email) throws Exception {
-		return userRepository.findByEmail(email.getEmail()).map(data -> {
-			data.setNome(email.getNome());
-			data.setSenha(email.getSenha());
+	public Optional<User> editarUsuario(User email) throws Exception {
+		return userRepository.findByEmail(email.getEmail())
+			.map(data -> {
+				data.setNome(email.getNome());
+				data.setSenha(email.getSenha());
 			
 			if(email.getUserRoles() == null) {
 				data.setUserRoles(UserRoles.USER);
+			}
+			else {
+				data.setUserRoles(UserRoles.ADMIN);
 			}
 			
 			return userRepository.save(data);
@@ -74,7 +78,7 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 	
-	public void deleteUser(Integer id) throws Exception {
+	public void delete(Integer id) throws Exception {
 		try {
 			userRepository.deleteById(id);
 			
